@@ -64,7 +64,6 @@ public class JobPosting {
     private BigDecimal minimumCgpa;
 
     @NotNull
-    @Future
     @Column(nullable = false)
     private Instant deadline;
 

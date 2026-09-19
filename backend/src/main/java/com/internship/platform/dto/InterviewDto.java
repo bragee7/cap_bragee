@@ -20,6 +20,8 @@ public class InterviewDto {
         public void setApplicationId(Long applicationId) { this.applicationId = applicationId; }
         public Instant getScheduledAt() { return scheduledAt; }
         public void setScheduledAt(Instant scheduledAt) { this.scheduledAt = scheduledAt; }
+        public InterviewMode getMode() { return mode; }
+        public void setMode(InterviewMode mode) { this.mode = mode; }
         public String getMeetingLink() { return meetingLink; }
         public void setMeetingLink(String meetingLink) { this.meetingLink = meetingLink; }
         public String getInterviewerName() { return interviewerName; }
@@ -38,6 +40,10 @@ public class InterviewDto {
         public void setApplicationId(Long applicationId) { this.applicationId = applicationId; }
         public Instant getScheduledAt() { return scheduledAt; }
         public void setScheduledAt(Instant scheduledAt) { this.scheduledAt = scheduledAt; }
+        public InterviewMode getMode() { return mode; }
+        public void setMode(InterviewMode mode) { this.mode = mode; }
+        public InterviewStatus getStatus() { return status; }
+        public void setStatus(InterviewStatus status) { this.status = status; }
         public String getMeetingLink() { return meetingLink; }
         public void setMeetingLink(String meetingLink) { this.meetingLink = meetingLink; }
         public String getInterviewerName() { return interviewerName; }
