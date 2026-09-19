@@ -10,7 +10,7 @@ public class StudentDto {
     public static class UpdateRequest {
         @Size(max = 120) private String college;
         @Size(max = 120) private String department;
-        @Min(1) @Max(8) private Integer year;
+        @Min(2000) @Max(2100) private Integer year;
         @DecimalMin("0.0") @DecimalMax("10.0") private BigDecimal cgpa;
         private List<String> skills;
         @Size(max = 2000) private String resumeUrl;

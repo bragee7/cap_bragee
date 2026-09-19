@@ -25,14 +25,15 @@ function Login({ setUser }) {
 }
 
 function Register() {
-  const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
+  const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
   const [role, setRole] = useState('STUDENT'); const nav = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
-    await api.post('/auth/register', { email, password, role });
+    await api.post('/auth/register', { name, email, password, role });
     nav('/login');
   };
   return (<form onSubmit={submit}><h2>Register</h2>
+    <input placeholder="full name" value={name} onChange={(e) => setName(e.target.value)} />
     <input placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
     <input placeholder="password (8+ chars, upper/lower/digit/special)" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
     <select value={role} onChange={(e) => setRole(e.target.value)}><option>STUDENT</option><option>COMPANY</option></select>
@@ -41,7 +42,7 @@ function Register() {
 
 function Jobs() {
   const [jobs, setJobs] = useState([]); const [q, setQ] = useState('');
-  const load = async () => { const { data } = await api.get('/jobs', { params: q ? { q } : {} }); setJobs(data.data); };
+  const load = async () => { const { data } = await api.get('/jobs', { params: q ? { keyword: q } : {} }); setJobs(data.data.content ?? data.data); };
   useEffect(() => { load(); }, []);
   const apply = async (id) => { await api.post('/applications', { jobId: id }); alert('Applied'); };
   return (<div><h2>Open Jobs</h2>
@@ -58,7 +59,7 @@ function Company() {
   const load = async () => { const { data } = await api.get('/jobs'); setJobs(data.data); };
   useEffect(() => { load(); }, []);
   const post = async () => {
-    await api.post('/company/jobs', { title, description: 'Great role', location: 'Bengaluru', jobType: 'INTERNSHIP', minCgpa: 7.0, requiredSkills: 'Java,Spring', applicationDeadline: '2026-12-31' });
+    await api.post('/jobs', { title, description: 'Great role', location: 'Bengaluru', jobType: 'INTERNSHIP', salary: 60000, minimumCgpa: 7.0, requiredSkills: 'Java,Spring', deadline: '2026-12-31T23:59:59Z' });
     load();
   };
   return (<div><h2>Company Dashboard</h2><button onClick={post}>Post: {title}</button>

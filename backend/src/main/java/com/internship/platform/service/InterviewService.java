@@ -52,9 +52,9 @@ public class InterviewService {
         Interview iv = new Interview();
         iv.setApplication(a);
         iv.setScheduledAt(req.getScheduledAt());
-        iv.setDurationMinutes(req.getDurationMinutes() == null ? 30 : req.getDurationMinutes());
         iv.setMode(req.getMode());
-        iv.setLocationOrLink(req.getLocationOrLink());
+        iv.setMeetingLink(req.getMeetingLink());
+        iv.setInterviewerName(req.getInterviewerName());
         iv.setStatus(InterviewStatus.SCHEDULED);
         Interview saved = interviews.save(iv);
         if (a.getStatus() == ApplicationStatus.SHORTLISTED) {
@@ -93,10 +93,10 @@ public class InterviewService {
         r.setId(iv.getId());
         r.setApplicationId(iv.getApplication().getId());
         r.setScheduledAt(iv.getScheduledAt());
-        r.setDurationMinutes(iv.getDurationMinutes());
         r.setMode(iv.getMode());
         r.setStatus(iv.getStatus());
-        r.setLocationOrLink(iv.getLocationOrLink());
+        r.setMeetingLink(iv.getMeetingLink());
+        r.setInterviewerName(iv.getInterviewerName());
         return r;
     }
 }

@@ -60,6 +60,11 @@ public class Student {
     @Column(length = 2000)
     private String bio;
 
+    /** Comma-separated skills, e.g. "Java,Spring Boot,SQL". */
+    @Size(max = 1000)
+    @Column(length = 1000)
+    private String skills;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
@@ -86,6 +91,8 @@ public class Student {
     public void setResumeUrl(String resumeUrl) { this.resumeUrl = resumeUrl; }
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
+    public String getSkills() { return skills; }
+    public void setSkills(String skills) { this.skills = skills; }
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }

@@ -51,7 +51,7 @@ public class AuthService {
         User u = new User();
         u.setName(req.getName().trim());
         u.setEmail(email);
-        u.setPasswordHash(passwords.encode(req.getPassword()));
+        u.setPassword(passwords.encode(req.getPassword()));
         u.setRole(req.getRole());
         u.setEnabled(true);
         User saved = users.save(u);
@@ -59,11 +59,15 @@ public class AuthService {
         if (req.getRole() == Role.STUDENT) {
             Student s = new Student();
             s.setUser(saved);
+            s.setCollegeName("Unspecified");
+            s.setDepartment("Unspecified");
+            s.setGraduationYear(java.time.Year.now().getValue() + 4);
+            s.setCgpa(java.math.BigDecimal.ZERO);
             students.save(s);
         } else {
             Company c = new Company();
             c.setUser(saved);
-            c.setName(saved.getName());
+            c.setCompanyName(saved.getName());
             c.setVerified(false);
             companies.save(c);
         }

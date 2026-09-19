@@ -24,8 +24,8 @@ public class MatchingService {
         if (student == null || job == null) {
             return 0.0;
         }
-        List<String> have = student.getSkills() == null ? List.of() : student.getSkills();
-        List<String> need = job.getRequiredSkills() == null ? List.of() : job.getRequiredSkills();
+        List<String> have = split(student.getSkills());
+        List<String> need = split(job.getRequiredSkills());
         Set<String> norm = new HashSet<>();
         for (String s : have) {
             if (s != null) {
@@ -48,5 +48,16 @@ public class MatchingService {
             cgpaPart = student.getCgpa().compareTo(job.getMinimumCgpa()) >= 0 ? 1.0 : 0.2;
         }
         return Math.round((0.7 * skillPart + 0.3 * cgpaPart) * 100.0) / 100.0;
+    }
+
+    /** Split a comma-separated skill string into trimmed tokens. */
+    public static List<String> split(String csv) {
+        if (csv == null || csv.isBlank()) {
+            return List.of();
+        }
+        return java.util.Arrays.stream(csv.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 }

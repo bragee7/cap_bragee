@@ -50,9 +50,8 @@ public class OfferService {
         }
         Offer o = new Offer();
         o.setApplication(a);
-        o.setStipend(req.getStipend());
+        o.setSalary(req.getSalary());
         o.setJoiningDate(req.getJoiningDate());
-        o.setDetails(req.getDetails());
         o.setStatus(OfferStatus.PENDING);
         Offer saved = offers.save(o);
         a.setStatus(ApplicationStatus.OFFERED);
@@ -106,10 +105,9 @@ public class OfferService {
         OfferDto.Response r = new OfferDto.Response();
         r.setId(o.getId());
         r.setApplicationId(o.getApplication().getId());
-        r.setStipend(o.getStipend());
+        r.setSalary(o.getSalary());
         r.setJoiningDate(o.getJoiningDate());
         r.setStatus(o.getStatus());
-        r.setDetails(o.getDetails());
         return r;
     }
 }

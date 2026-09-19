@@ -51,7 +51,7 @@ public class ApplicationService {
             throw new BadRequestException("Job is not open for applications");
         }
         // BR-03: deadline
-        if (job.getApplicationDeadline() != null && Instant.now().isAfter(job.getApplicationDeadline())) {
+        if (job.getDeadline() != null && Instant.now().isAfter(job.getDeadline())) {
             throw new BadRequestException("Application deadline has passed");
         }
         // BR-01: duplicate
@@ -161,7 +161,7 @@ public class ApplicationService {
         r.setJobId(a.getJobPosting().getId());
         r.setJobTitle(a.getJobPosting().getTitle());
         r.setCompanyId(a.getJobPosting().getCompany().getId());
-        r.setCompanyName(a.getJobPosting().getCompany().getName());
+        r.setCompanyName(a.getJobPosting().getCompany().getCompanyName());
         r.setStatus(a.getStatus());
         r.setCoverLetter(a.getCoverLetter());
         r.setAppliedAt(a.getAppliedAt());

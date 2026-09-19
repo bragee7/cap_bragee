@@ -39,7 +39,7 @@ public class CompanyService {
         User u = security.currentUser();
         Company c = companies.findByUserId(u.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Company profile not found"));
-        if (req.getName() != null) c.setName(req.getName());
+        if (req.getName() != null) c.setCompanyName(req.getName());
         if (req.getDescription() != null) c.setDescription(req.getDescription());
         if (req.getWebsite() != null) c.setWebsite(req.getWebsite());
         if (req.getIndustry() != null) c.setIndustry(req.getIndustry());
@@ -69,7 +69,7 @@ public class CompanyService {
         CompanyDto.Response r = new CompanyDto.Response();
         r.setId(c.getId());
         r.setUserId(c.getUser().getId());
-        r.setName(c.getName());
+        r.setName(c.getCompanyName());
         r.setEmail(c.getUser().getEmail());
         r.setDescription(c.getDescription());
         r.setWebsite(c.getWebsite());

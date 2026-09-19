@@ -37,11 +37,11 @@ public class StudentService {
         User u = security.currentUser();
         Student s = students.findByUserId(u.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Student profile not found"));
-        if (req.getCollege() != null) s.setCollege(req.getCollege());
+        if (req.getCollege() != null) s.setCollegeName(req.getCollege());
         if (req.getDepartment() != null) s.setDepartment(req.getDepartment());
-        if (req.getYear() != null) s.setYear(req.getYear());
+        if (req.getYear() != null) s.setGraduationYear(req.getYear());
         if (req.getCgpa() != null) s.setCgpa(req.getCgpa());
-        if (req.getSkills() != null) s.setSkills(req.getSkills());
+        if (req.getSkills() != null) s.setSkills(String.join(",", req.getSkills()));
         if (req.getResumeUrl() != null) s.setResumeUrl(req.getResumeUrl());
         audit.record(u.getId(), "UPDATE_PROFILE", "Student", s.getId());
         return toResponse(s);
@@ -54,11 +54,11 @@ public class StudentService {
         r.setUserId(s.getUser().getId());
         r.setName(s.getUser().getName());
         r.setEmail(s.getUser().getEmail());
-        r.setCollege(s.getCollege());
+        r.setCollege(s.getCollegeName());
         r.setDepartment(s.getDepartment());
-        r.setYear(s.getYear());
+        r.setYear(s.getGraduationYear());
         r.setCgpa(s.getCgpa());
-        r.setSkills(s.getSkills());
+        r.setSkills(com.internship.platform.util.MatchingService.split(s.getSkills()));
         r.setResumeUrl(s.getResumeUrl());
         return r;
     }
