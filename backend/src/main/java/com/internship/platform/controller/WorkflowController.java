@@ -72,9 +72,41 @@ public class WorkflowController {
         return ResponseEntity.ok(ApiResponse.ok(admin.stats(), "Stats"));
     }
 
+    @GetMapping("/api/admin/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<?>> adminUsers() {
+        return ResponseEntity.ok(ApiResponse.ok(admin.listUsers(), "Users"));
+    }
+
+    @GetMapping("/api/admin/jobs")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<?>> adminJobs(
+            @RequestParam(required = false) String status) {
+        com.internship.platform.model.enums.JobStatus js = null;
+        if (status != null && !status.isBlank()) {
+            try { js = com.internship.platform.model.enums.JobStatus.valueOf(status.toUpperCase()); } catch (IllegalArgumentException ignored) {}
+        }
+        return ResponseEntity.ok(ApiResponse.ok(admin.listJobs(js), "Jobs"));
+    }
+
+    @GetMapping("/api/admin/applications")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<?>> adminApplications(
+            @RequestParam(required = false) String status) {
+        com.internship.platform.model.enums.ApplicationStatus s = null;
+        if (status != null && !status.isBlank()) {
+            try { s = com.internship.platform.model.enums.ApplicationStatus.valueOf(status.toUpperCase()); } catch (IllegalArgumentException ignored) {}
+        }
+        return ResponseEntity.ok(ApiResponse.ok(admin.listApplications(s), "Applications"));
+    }
+
     @GetMapping("/api/admin/companies")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<?>> allCompanies() {
+    public ResponseEntity<ApiResponse<?>> allCompanies(
+            @RequestParam(required = false) Boolean verified) {
+        if (verified != null) {
+            return ResponseEntity.ok(ApiResponse.ok(admin.listCompanies(verified), "Companies"));
+        }
         return ResponseEntity.ok(ApiResponse.ok(companies.listAll(), "Companies"));
     }
 
