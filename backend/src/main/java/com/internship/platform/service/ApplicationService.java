@@ -14,6 +14,7 @@ import java.util.List;
 
 /** Application workflow with eligibility + state-machine guards. */
 @Service
+@Transactional(readOnly = true)
 public class ApplicationService {
 
     private final ApplicationRepository applications;
@@ -135,16 +136,24 @@ public class ApplicationService {
         audit.record(u.getId(), "WITHDRAW", "Application", id);
     }
 
-    /** Forward-only transitions. */
+    /** Forward-only transitions: APPLIED -> UNDER_REVIEW -> SHORTLISTED
+     * -> INTERVIEW -> SELECTED -> OFFERED -> ACCEPTED, with REJECTED /
+     * WITHDRAWN exits along the way. */
     static boolean isForward(ApplicationStatus from, ApplicationStatus to) {
         return switch (from) {
-            case APPLIED -> to == ApplicationStatus.SHORTLISTED
+            case APPLIED -> to == ApplicationStatus.UNDER_REVIEW
+                    || to == ApplicationStatus.SHORTLISTED
+                    || to == ApplicationStatus.REJECTED
+                    || to == ApplicationStatus.WITHDRAWN;
+            case UNDER_REVIEW -> to == ApplicationStatus.SHORTLISTED
                     || to == ApplicationStatus.REJECTED
                     || to == ApplicationStatus.WITHDRAWN;
             case SHORTLISTED -> to == ApplicationStatus.INTERVIEW
                     || to == ApplicationStatus.REJECTED
                     || to == ApplicationStatus.WITHDRAWN;
-            case INTERVIEW -> to == ApplicationStatus.OFFERED
+            case INTERVIEW -> to == ApplicationStatus.SELECTED
+                    || to == ApplicationStatus.REJECTED;
+            case SELECTED -> to == ApplicationStatus.OFFERED
                     || to == ApplicationStatus.REJECTED;
             case OFFERED -> to == ApplicationStatus.ACCEPTED
                     || to == ApplicationStatus.REJECTED;

@@ -13,6 +13,7 @@ import java.util.List;
 
 /** Offer issue/accept/decline with single-active-offer guard. */
 @Service
+@Transactional(readOnly = true)
 public class OfferService {
 
     private final OfferRepository offers;

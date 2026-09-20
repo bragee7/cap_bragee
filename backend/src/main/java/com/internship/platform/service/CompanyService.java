@@ -13,6 +13,7 @@ import java.util.List;
 
 /** Company profile management + admin verification. */
 @Service
+@Transactional(readOnly = true)
 public class CompanyService {
 
     private final CompanyRepository companies;

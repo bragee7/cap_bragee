@@ -13,6 +13,7 @@ import java.util.List;
 
 /** In-app notifications + optional email copy. */
 @Service
+@Transactional(readOnly = true)
 public class NotificationService {
 
     private final NotificationRepository repo;

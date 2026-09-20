@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /** Student profile management. */
 @Service
+@Transactional(readOnly = true)
 public class StudentService {
 
     private final StudentRepository students;

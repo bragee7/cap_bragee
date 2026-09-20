@@ -18,6 +18,7 @@ import java.util.List;
 
 /** Job posting lifecycle with CGPA/eligibility enforcement. */
 @Service
+@Transactional(readOnly = true)
 public class JobService {
 
     private final JobPostingRepository jobs;

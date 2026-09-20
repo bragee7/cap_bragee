@@ -11,6 +11,7 @@ import com.internship.platform.service.ApplicationService;
 import com.internship.platform.service.CompanyService;
 import com.internship.platform.service.JobService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 /** Admin dashboard statistics. */
 @Service
+@Transactional(readOnly = true)
 public class AdminService {
 
     private final UserRepository users;

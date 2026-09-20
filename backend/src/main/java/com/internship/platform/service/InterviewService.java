@@ -14,6 +14,7 @@ import java.util.List;
 
 /** Interview scheduling with ownership guards. */
 @Service
+@Transactional(readOnly = true)
 public class InterviewService {
 
     private final InterviewRepository interviews;
